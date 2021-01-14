@@ -1,0 +1,22 @@
+* {
+    background-color: antiquewhite;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+button {
+    padding: 20px;
+    margin-left: 120px;
+    margin-right: 40px;
+    margin-top: 20px;
+    transition-duration: 1s;
+}
+
+button:hover {
+    background-color: rgb(238, 87, 87);
+    cursor: pointer;
+    transition-timing-function: ease-in-out;
+}
