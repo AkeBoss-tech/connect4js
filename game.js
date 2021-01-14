@@ -2,8 +2,6 @@ let canvas = document.getElementById("gameCanvas");
 let ctx = canvas.getContext('2d');
 let x = canvas.width/2;
 let y = canvas.height-30;
-let dx = 2;
-let dy = -2;
 let turn = 1;
 let win = false;
 
@@ -21,6 +19,8 @@ let gameBoard = [
     [0, 0, 0, 0, 0, 0, 0]
 ];
 
+let previousMoves = []
+let previousGames = []
 
 
 function drawGameBoard(height, width) {
@@ -126,6 +126,27 @@ function checkList(list, color) {
     return true;
 }
 
+function takeBackMove() {
+    if (previousMoves.length != 0) {
+        lastMove = previousMoves[previousMoves.length - 1];
+        lastColor = lastMove[0];
+        lastPosition = lastMove[1];
+        gameBoard[lastPosition[0]][lastPosition[1]] = 0;
+        turn = lastColor;
+        switch (turn) {
+            case 1:
+                document.getElementById("text").textContent = "Yellow's Turn";
+                break;
+            case 2:
+                document.getElementById("text").textContent = "Red's Turn";
+                break;
+        }
+        previousMoves.pop()
+        win = checkIfFour();
+        document.getElementById("description").textContent = "";
+    }
+}
+
 function move(column, color) {
     let col = [];
     for (i = 0; i < 6; i++) {
@@ -139,6 +160,7 @@ function move(column, color) {
     for (e = col.length - 1; e >= 0; e--) {
         if (col[e] == 0) {
             gameBoard[e][column] = color;
+            previousMoves.push([color, [e, column]]);
             switch (turn) {
                 case 1:
                     turn = 2;
@@ -149,8 +171,7 @@ function move(column, color) {
                     document.getElementById("text").textContent = "Yellow's Turn";
                     break;
             }
-            return;
-            
+            return;     
         }
     }
 }
@@ -175,15 +196,14 @@ function findClickLocation(event){
 
 function shouldMove(e) {
     l = findClickLocation(e);
-    console.log(l);
-
     if (l != -1) {
         move(l, turn);
     }
 }
 
+
 function reset(){
-    alert("Click Ok to Play Again.")
+    previousGames.push(previousMoves)
     gameBoard = [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -225,6 +245,8 @@ function draw() {
     }
 }
 
+
+
 canvas.addEventListener("mousedown", function(e) 
         { 
             if (win === false) {
@@ -242,7 +264,6 @@ canvas.addEventListener("mousedown", function(e)
                     }
             }
             }
-            
         }); 
 
 
