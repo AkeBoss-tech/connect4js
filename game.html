@@ -6,11 +6,13 @@
     <title>Game</title>
 </head>
 <body>
+    <link href="game.css" rel="stylesheet">
     <h1 id="text">Yellow's Turn</h1>
     <p id="description" style="font-size: larger"></p>
     <canvas id="gameCanvas" width="780" height="690"></canvas>
     <br>
     <button onclick="reset()" style="font-size: xx-large">Reset</button>
+    <button onclick="takeBackMove()" style="font-size: xx-large">Take Back Move</button>
     <p id="redWins" style="font-size: larger">Red Wins: 0</p>
     <p id="yellowWins" style="font-size: larger">Yellow Wins: 0</p>
     <script src="game.js"></script>
